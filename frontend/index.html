@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lost &amp; Found Board - DApp</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🔎 Lost &amp; Found Board</h1>
+    <div class="wallet">
+      <button id="connectBtn">Connect MetaMask</button>
+      <div id="walletInfo" class="small">Not connected</div>
+    </div>
+  </header>
+
+  <main>
+    <div id="message" class="message hidden"></div>
+
+    <section class="card">
+      <h2>Contract Info</h2>
+      <div class="small">
+        Network: <span id="network">-</span> |
+        Contract: <span id="contractAddr">-</span><br />
+        Admin: <span id="adminAddr">-</span> |
+        Total posts: <span id="totalItems">-</span> |
+        Min reward: <span id="minReward">-</span> ETH
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Report an Item</h2>
+      <div class="form">
+        <input id="title" type="text" placeholder="Title (e.g. Black wallet)" maxlength="80" />
+        <textarea id="description" placeholder="Description (max 300 chars)" maxlength="300"></textarea>
+        <input id="location" type="text" placeholder="Location (e.g. Library, MIT Manipal)" maxlength="100" />
+        <select id="itemType">
+          <option value="0">I LOST this item</option>
+          <option value="1">I FOUND this item</option>
+        </select>
+        <input id="reward" type="text" placeholder="Reward in ETH (optional, Lost items only)" />
+        <button id="reportBtn">Submit Report</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Board</h2>
+      <div class="toolbar">
+        <select id="filter">
+          <option value="all">All</option>
+          <option value="0">Lost</option>
+          <option value="1">Found</option>
+        </select>
+        <button id="refreshBtn">Refresh</button>
+      </div>
+      <p class="small">Action buttons are shown to everyone so unauthorised attempts can be tested; the smart contract enforces permissions.</p>
+      <div id="items"></div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
