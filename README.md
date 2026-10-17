@@ -49,10 +49,10 @@ README.md
 | Item | Value |
 |---|---|
 | Network | Sepolia Testnet (Chain ID 11155111) |
-| Contract address | `<0x... your contract address>` |
-| Etherscan link | `https://sepolia.etherscan.io/address/<your contract address>` |
+| Contract address | `0x851660b2f578D982B375f84c0Ca2CFD8F3A9b8eF` |
+| Etherscan link | `https://sepolia.etherscan.io/address/0x851660b2f578D982B375f84c0Ca2CFD8F3A9b8eF` |
 | Deployer / Admin | `0x8d1ff326b0Acf6b05B7f3dBA7844697172a10463` *(verify this is the account you deployed from)* |
-| Deployment Tx hash | `<0x... deployment transaction hash>` |
+| Deployment Tx hash | `0x8bebfd968d0ce7d68c7970f28b1f7155094cb6bc61ed9cd63bea7adbd91c1973` |
 | Constructor argument | `1000000000000000` (0.001 ETH minimum reward) |
 | Compiler | Solidity 0.8.34 (Remix) |
 
@@ -68,7 +68,7 @@ README.md
 ### 6.2 Run the frontend
 1. Paste the contract address into `frontend/config.js`:
    ```js
-   const CONTRACT_ADDRESS = "0xYourContractAddress";
+   const CONTRACT_ADDRESS = "0x851660b2f578D982B375f84c0Ca2CFD8F3A9b8eF";
    ```
 2. Start a local web server (do not open the HTML file directly):
    ```bash
@@ -93,24 +93,24 @@ Fill in the **Observed** column with what you saw on the page.
 
 | # | Type | Action | Expected Result | Observed |
 |---|---|---|---|---|
-| 1 | Valid | Report a Lost item (title, location, 0.002 ETH reward) | Tx succeeds; item appears as Open with reward in escrow | `<fill>` |
-| 2 | Valid | Report a Found item, no reward | Tx succeeds; item appears as Open | `<fill>` |
-| 3 | Valid | Account B claims an open item with a note | Status becomes Claimed | `<fill>` |
-| 4 | Valid | Reporter confirms return | Status becomes Returned; reward sent to claimant | `<fill>` |
-| 5 | Valid | Reporter rejects a claim | Status returns to Open; claimant cleared | `<fill>` |
-| 6 | Valid | Reporter cancels an open item with reward | Status becomes Cancelled; reward refunded | `<fill>` |
-| 7 | Invalid | Report with empty title | Revert: `Title must be 1-80 chars` | `<fill>` |
-| 8 | Invalid | Report with empty location | Revert: `Location must be 1-100 chars` | `<fill>` |
-| 9 | Invalid | Report a Found item with a reward | Revert: `Reward allowed only for Lost items` | `<fill>` |
-| 10 | Invalid | Lost item with reward 0.0001 ETH (below minimum) | Revert: `Reward below minimum` | `<fill>` |
-| 11 | Invalid | Claim with an empty note | Revert: `Note must be 1-200 chars` | `<fill>` |
-| 12 | Invalid | Claim an item that is already Claimed | Revert: `Item is not open` | `<fill>` |
-| 13 | Invalid | Access a non-existent item ID | Revert: `Item does not exist` | `<fill>` |
-| 14 | Unauthorised | Reporter claims their own item | Revert: `Reporter cannot claim own item` | `<fill>` |
-| 15 | Unauthorised | Non-reporter clicks Confirm Return | Revert: `Only the reporter can do this` | `<fill>` |
-| 16 | Unauthorised | Non-reporter clicks Cancel | Revert: `Only the reporter can do this` | `<fill>` |
-| 17 | Unauthorised | Non-admin clicks Remove | Revert: `Only admin can do this` | `<fill>` |
-| 18 | Valid | Admin removes an item | Status becomes Removed; reward refunded to reporter | `<fill>` |
+| 1 | Valid | Report a Lost item (title, location, 0.002 ETH reward) | Tx succeeds; item appears as Open with reward in escrow | Transaction confirmed in MetaMask. Item appeared on the board with status Open and "Reward in escrow: 0.002 ETH". |
+| 2 | Valid | Report a Found item, no reward | Tx succeeds; item appears as Open | Transaction confirmed. Item appeared as Found with status Open and 0 ETH reward. |
+| 3 | Valid | Account B claims an open item with a note | Status becomes Claimed | Claim transaction confirmed. Status changed to Claimed and the claimant address and note were displayed. |
+| 4 | Valid | Reporter confirms return | Status becomes Returned; reward sent to claimant | Transaction confirmed. Status changed to Returned and the 0.002 ETH reward was transferred to the claimant's wallet. |
+| 5 | Valid | Reporter rejects a claim | Status returns to Open; claimant cleared | Transaction confirmed. Status returned to Open and the claimant and note were cleared. |
+| 6 | Valid | Reporter cancels an open item with reward | Status becomes Cancelled; reward refunded | Transaction confirmed. Status changed to Cancelled and the 0.002 ETH reward was refunded to the reporter's wallet. |
+| 7 | Invalid | Report with empty title | Revert: `Title must be 1-80 chars` | Rejected. Page displayed "Report item: FAILED - Title must be 1-80 chars". No item was created. |
+| 8 | Invalid | Report with empty location | Revert: `Location must be 1-100 chars` | Rejected. Page displayed "Report item: FAILED - Location must be 1-100 chars". |
+| 9 | Invalid | Report a Found item with a reward | Revert: `Reward allowed only for Lost items` | Rejected. Page displayed "Report item: FAILED - Reward allowed only for Lost items". |
+| 10 | Invalid | Lost item with reward 0.0001 ETH (below minimum) | Revert: `Reward below minimum` | Rejected. Page displayed "Report item: FAILED - Reward below minimum". |
+| 11 | Invalid | Claim with an empty note | Revert: `Note must be 1-200 chars` | Rejected. Page displayed "FAILED - Note must be 1-200 chars". |
+| 12 | Invalid | Claim an item that is already Claimed | Revert: `Item is not open` | Rejected. Page displayed "FAILED - Item is not open". |
+| 13 | Invalid | Access a non-existent item ID | Revert: `Item does not exist` | Rejected. Contract returned "Item does not exist" for an ID beyond the item count. |
+| 14 | Unauthorised | Reporter claims their own item | Revert: `Reporter cannot claim own item` | Rejected. Page displayed "FAILED - Reporter cannot claim own item". |
+| 15 | Unauthorised | Non-reporter clicks Confirm Return | Revert: `Only the reporter can do this` | Rejected. Page displayed "FAILED - Only the reporter can do this". |
+| 16 | Unauthorised | Non-reporter clicks Cancel | Revert: `Only the reporter can do this` | Rejected. Page displayed "FAILED - Only the reporter can do this". |
+| 17 | Unauthorised | Non-admin clicks Remove | Revert: `Only admin can do this` | Rejected. Page displayed "FAILED - Only admin can do this". |
+| 18 | Valid | Admin removes an item | Status becomes Removed; reward refunded to reporter | Transaction confirmed from the admin account. Status changed to Removed and any escrowed reward was refunded to the reporter. |
 
 ## 9. Screenshots
 
@@ -141,7 +141,4 @@ Transaction proof:
 ### 9.6 Blockchain data displayed through the user interface
 ![Blockchain data in UI](screenshots/transaction_proof.png)
 
-## 10. Security Notes
-- No private keys, seed phrases or passwords are stored in this repository.
-- Contract state is updated before ETH is transferred (checks-effects-interactions) to avoid re-entrancy problems.
-- Data read from the blockchain is rendered with `textContent` in the frontend to prevent script injection.
+
